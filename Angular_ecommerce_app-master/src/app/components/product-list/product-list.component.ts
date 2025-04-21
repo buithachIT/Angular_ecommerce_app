@@ -13,7 +13,7 @@ import{ProductService} from '../../services/product.service';
     CustomPipePrice,
     RouterLink],
   templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.css'
+  styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
   products: ProductItem[] = [];
