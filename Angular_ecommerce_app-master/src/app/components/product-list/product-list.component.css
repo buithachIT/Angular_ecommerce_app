@@ -1,3 +1,5 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
 .group-card {
   display: flex;
   flex-direction: column;
@@ -93,6 +95,12 @@
   margin-top: 20px;
 }
 
+.container {
+  margin: 0;
+  padding-left: 350px;
+  width: 100%;
+}
+
 .pagination button {
   padding: 8px 12px;
   margin: 0 5px;
@@ -107,9 +115,22 @@
   color: white;
 }
 
-/* Filter */
+
 .filter {
-  width: 100%;
-  display: flex;
-  margin-left: 100px;
+  padding: 20px;
+  height: 200px;
+  position: fixed;
+  top: 140px;
+  left: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  justify-content: space-between;
+  align-items: center;
+  margin: 4rem 0;
+  gap: 1rem;
+  width: 350px;
+}
+
+.filter-price input {
+  width: 100px;
+  margin: 0 4px;
 }

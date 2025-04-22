@@ -54,8 +54,6 @@ export class LoginComponent {
       this.errorMessage = 'Đăng nhập thất bại! Vui lòng thử lại.';
     }  
   }
-
-
   // Forgot password
   async onResetPassword() {
     try {
