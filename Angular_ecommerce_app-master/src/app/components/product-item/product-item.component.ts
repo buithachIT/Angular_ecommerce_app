@@ -5,11 +5,13 @@ import { ProductItem } from '../types/productItem';
 import { CustomPipePrice } from '../pipes/custom-price.pipe';
 import { CustomNamePipe } from '../pipes/custom-name.pipe';
 import { NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-product-item',
   standalone: true,
-  imports: [CustomPipePrice, CustomNamePipe, NgIf],
+  imports: [CustomPipePrice, NgIf, FormsModule],
   templateUrl: './product-item.component.html',
   styleUrl: './product-item.component.css',
 })
@@ -19,7 +21,8 @@ export class ProductItemComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +38,13 @@ export class ProductItemComponent implements OnInit {
     }
   }
 
-  addToCart() {
-    console.log('Sản phẩm đã được thêm vào giỏ hàng với số lượng:', this.quantity);
+  addToCart(): void {
+    if (this.product) {
+      this.cartService.addToCart(this.product, this.quantity);
+      // Show success message
+      alert(
+        `${this.product.name} đã được thêm vào giỏ hàng (Số lượng: ${this.quantity})`
+      );
+    }
   }
 }

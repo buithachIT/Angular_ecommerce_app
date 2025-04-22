@@ -16,7 +16,25 @@
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "ES2022"
+    "module": "ES2022",
+    "types": [
+      "node",
+      "body-parser",
+      "bonjour",
+      "connect",
+      "connect-history-api-fallback",
+      "cors",
+      "eslint",
+      "eslint-scope",
+      "jasmine",
+      "json-schema",
+      "range-parser",
+      "send",
+      "serve-static"
+    ],
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -25,3 +43,4 @@
     "strictTemplates": true
   }
 }
+

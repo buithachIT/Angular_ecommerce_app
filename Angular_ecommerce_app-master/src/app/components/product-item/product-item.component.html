@@ -18,7 +18,9 @@
       </div>
   
       <!-- Nút thêm vào giỏ hàng -->
-      <button class="add-to-cart">Thêm vào giỏ hàng</button>
+      <!-- <button class="add-to-cart">Thêm vào giỏ hàng</button> {Changed by Tan} --> 
+      <button class="add-to-cart" (click)="addToCart()">Thêm vào giỏ hàng</button>
+
       <p class="product-description">
         Đây là một mô tả ngắn về sản phẩm. Nó cung cấp thông tin chi tiết và hấp dẫn về sản phẩm:
         <br>{{product.describe}}

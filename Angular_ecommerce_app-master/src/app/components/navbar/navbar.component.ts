@@ -1,30 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CartService } from '../../services/cart.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-   imports: [ 
-    CommonModule,
-    FormsModule,RouterLink,RouterOutlet
-    
-  ],
-  styleUrls: ['./navbar.component.css']
+  imports: [CommonModule, FormsModule, RouterLink],
+  styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   isUserMenuOpen = false;
   isSearchOpen = false;
-  userName: string = '';
+  userName: string = 'Người dùng';
+  cartItemCount = 0;
+  private userSubscription: Subscription | undefined;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit() {
-    this.userName = this.authService.getCurrentUser()?.displayName || 'Người dùng';
+    this.authService.currentUser$.subscribe((user) => {
+      this.userName = this.authService.getCurrentUserName();
+    });
+    this.cartService.cartCount$.subscribe((count) => {
+      this.cartItemCount = count;
+    });
+  }
+
+  ngOnDestroy() {
+    // Clean up subscriptions
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   handleUserClick() {
@@ -37,8 +53,19 @@ export class NavbarComponent {
 
   handleCartClick() {
     if (!localStorage.getItem('access_token')) {
-      Swal.fire({ icon: 'error', title: 'Please login!', timer: 2500 });
+      Swal.fire({
+        icon: 'error',
+        title: 'Vui lòng đăng nhập!',
+        text: 'Bạn cần đăng nhập để xem giỏ hàng',
+        timer: 2500,
+      });
       this.router.navigate(['/login']);
+    } else if (this.authService.getCurrentUser()) {
+      this.router.navigate(['/cart']); // Navigate to cart page
+    } else {
+      this.router.navigate(['/login'], {
+        queryParams: { returnUrl: '/cart' },
+      });
     }
   }
 

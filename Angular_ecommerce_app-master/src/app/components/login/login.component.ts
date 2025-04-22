@@ -14,55 +14,68 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [FormsModule, CommonModule,
+  imports: [
+    FormsModule,
+    CommonModule,
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-    MatFormFieldModule
+    MatFormFieldModule,
   ],
-
 })
-  
 export class LoginComponent {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
   userName: any;
   resetEmail: string = '';
-   
+
   showForgotPassword: boolean = false;
 
-   toggleForgotPassword() {
+  toggleForgotPassword() {
     this.showForgotPassword = !this.showForgotPassword;
   }
 
-  constructor(private authService: AuthService, private router: Router) { }
-  
+  constructor(private authService: AuthService, private router: Router) {}
+
   loginWithGoogle() {
-  this.authService.login('google');
+    this.authService.login('google');
   }
 
-  async login(type: 'backend' | 'google', event : Event) {
-  
-  event.preventDefault();
+  async login(type: 'backend' | 'google', event: Event) {
+    event.preventDefault();
     try {
-      const user = await this.authService.login(type, this.email, this.password);
+      const user = await this.authService.login(
+        type,
+        this.email,
+        this.password
+      );
 
-      this.userName = this.authService.getCurrentUser()?.userName || 'Người dùng';
+      this.userName =
+        this.authService.getCurrentUser()?.displayName || 'Người dùng';
     } catch (error) {
-      Swal.fire({ position: 'center', icon: 'error', title: 'Incorrect email or password!', showConfirmButton: false, timer: 1500 });
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Incorrect email or password!',
+        showConfirmButton: false,
+        timer: 1500,
+      });
       this.errorMessage = 'Đăng nhập thất bại! Vui lòng thử lại.';
-    }  
+    }
   }
   // Forgot password
   async onResetPassword() {
     try {
       const message = await this.authService.resetPassword(this.resetEmail);
-      Swal.fire('Thành công!', message+". Vui lòng kiểm tra email!", 'success');
+      Swal.fire(
+        'Thành công!',
+        message + '. Vui lòng kiểm tra email!',
+        'success'
+      );
       this.showForgotPassword = false;
     } catch (error) {
       Swal.fire('Lỗi!', 'Không thể gửi email đặt lại mật khẩu.', 'error');
     }
   }
-  
 }
