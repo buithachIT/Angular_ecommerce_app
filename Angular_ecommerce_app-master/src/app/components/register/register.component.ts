@@ -7,7 +7,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { LoginComponent } from '../login/login.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -52,15 +51,6 @@ export class RegisterComponent {
         });
   }
   
-
-    // registerWithGoogle() {
-      // this.authService.loginWithGoogle()
-      //   .then(() => {
-      //     this.router.navigate(['/home']);
-      //   })
-      //   .catch(error => {
-      //     this.errorMessage = error.message;
-      //   });
     }
   
 

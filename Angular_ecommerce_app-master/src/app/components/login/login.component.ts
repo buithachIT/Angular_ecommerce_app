@@ -1,5 +1,4 @@
 import { Component, Injector } from '@angular/core';
-import axios from 'axios';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -55,6 +54,8 @@ export class LoginComponent {
       this.errorMessage = 'Đăng nhập thất bại! Vui lòng thử lại.';
     }  
   }
+
+
   // Forgot password
   async onResetPassword() {
     try {

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, signInWithPopup, GoogleAuthProvider, signOut, User, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 
 @Injectable({
@@ -16,18 +15,22 @@ export class AuthService {
       try {
           if (type === 'google') {
               const provider = new GoogleAuthProvider();
-              const result = await signInWithPopup(this.auth, provider);
+            const result = await signInWithPopup(this.auth, provider);
+            
             this.user = result.user;
+
             localStorage.setItem('user', JSON.stringify(this.user));
-             const token = await result.user.getIdToken();
+            const token = await result.user.getIdToken();
+            
             localStorage.setItem('access_token', token);
-              console.log('Đăng nhập thành công:', this.user);
+            console.log('Đăng nhập thành công:', this.user);
+           
             this.router.navigate(['']);
             window.location.reload();
-          } else {
-              if (!email || !password) throw new Error('Thiếu email hoặc mật khẩu!');
+          }
+          else {
+            if (!email || !password) throw new Error('Thiếu email hoặc mật khẩu!');
         
-          
             const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
             
             this.user = userCredential.user;
@@ -41,15 +44,15 @@ export class AuthService {
                                 title: 'Successful!',
                                 showConfirmButton: false,
                                 timer: 1500
-      }).then(() => {
-  this.router.navigate(['']);
-        window.location.reload(); 
-});
+                        }).then(() => {
+                                this.router.navigate(['']);
+                                window.location.reload(); 
+                                      });
             
        
           }
-           console.log(`Người dùng đăng nhập từ ${type}:`, this.user);
-      return this.user;
+            console.log(`Người dùng đăng nhập từ ${type}:`, this.user);
+            return this.user;
       }
       catch(error) {
            console.error(`Lỗi đăng nhập ${type}:`, error);
@@ -75,7 +78,6 @@ export class AuthService {
 
     }
 }
-
 
   logout() {
     localStorage.removeItem('access_token');
